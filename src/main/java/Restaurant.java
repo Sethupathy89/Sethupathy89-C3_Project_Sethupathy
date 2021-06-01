@@ -1,6 +1,8 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Restaurant {
 	
@@ -9,7 +11,7 @@ public class Restaurant {
     public LocalTime openingTime;
     public LocalTime closingTime;
     private List<Item> menu = new ArrayList<Item>();
-    
+    private Map<String,Integer> itemMap = new HashMap<String, Integer>();
 
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
@@ -62,8 +64,24 @@ public class Restaurant {
                 +"Menu:"+"\n"+getMenu());
 
     }
+	
+	public int getTotalOrderValue(String items) {    
+    	int totalCost = 0;    	
+    	String[] itemsSplit = items.split(",");
+    	this.convertListToMap();    	 
+    	for(int i=0;i<itemsSplit.length;i++) {
+    		if(itemMap.containsKey(itemsSplit[i])) {
+    			totalCost = totalCost + itemMap.get(itemsSplit[i]);
+    		}
+    	}
+    	return totalCost;
+    }
     
-   
+    private void convertListToMap() {
+    	for(Item itemList : menu) {
+    		itemMap.put(itemList.getName(), itemList.getPrice());
+    	}    	
+    }   
 
     public String getName() {
         return name;
