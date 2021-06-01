@@ -54,6 +54,7 @@ class RestaurantTest {
         restaurant.addToMenu("Sizzling brownie",319);
         assertEquals(initialMenuSize+1,restaurant.getMenu().size());
     }
+	
     @Test
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
         restaurant.removeFromMenu("Vegetable lasagne");
@@ -63,6 +64,28 @@ class RestaurantTest {
     public void removing_item_that_does_not_exist_should_throw_exception() {
         assertThrows(itemNotFoundException.class,
                 ()->restaurant.removeFromMenu("French fries"));
+    }
+	
+	@Test
+    public void get_total_order_value_of_3_items_selected_by_customer() {
+    	restaurant.addToMenu("Sizzling brownie",319);
+    	int actualTotalOrderValue= restaurant.getTotalOrderValue("Sweet corn soup,Sizzling brownie,Vegetable lasagne");
+    	int expectedTotalOrderValue = 707;
+    	assertEquals(expectedTotalOrderValue,actualTotalOrderValue);
+    }
+    
+    @Test
+    public void get_total_order_value_of_2_items_selected_by_customer() {
+    	int actualTotalOrderValue= restaurant.getTotalOrderValue("Sweet corn soup,Vegetable lasagne");
+    	int expectedTotalOrderValue = 388;
+    	assertEquals(expectedTotalOrderValue,actualTotalOrderValue);
+    }
+    
+    @Test
+    public void get_total_order_value_of_1_item_selected_by_customer() {
+    	int actualTotalOrderValue= restaurant.getTotalOrderValue("Sweet corn soup");
+    	int expectedTotalOrderValue = 119;
+    	assertEquals(expectedTotalOrderValue,actualTotalOrderValue);
     }
     
     
